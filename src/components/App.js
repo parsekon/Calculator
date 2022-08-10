@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Login from "./Login";
 import Main from "./Main";
-import provider from "./Provider";
+import provider from "../provider";
 
 const App = () => {
   const [loginAccount, setLoginAccount] = useState();
@@ -32,21 +32,18 @@ const App = () => {
   const handleExitClick = () => {
     sessionStorage.removeItem("login");
     setExit(true);
-  }
+  };
 
   return (
-    <div className="dark">
-    <div className="h-screen">
+    <div className="">
       {!loginAccount ? (
         <Login onClick={handleClickMetamask} needMetamask={needMetamask} />
       ) : (
         <>
-        <Header onClick={handleExitClick} account={loginAccount} />
-        <Main />
-        <Footer />
+          <Header onClick={handleExitClick} account={loginAccount} />
+          <Main />
         </>
       )}
-      </div>
     </div>
   );
 };
