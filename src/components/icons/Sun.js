@@ -4,7 +4,7 @@ export const Sun = () => {
   return (
     <div>
       <svg
-        className="fill-purplePrimary dark:fill-purpleLigth"
+        className="fill-white dark:fill-red-600"
         width="15"
         height="15"
         xmlns="http://www.w3.org/2000/svg"

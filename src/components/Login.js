@@ -1,3 +1,5 @@
+import { ThemeToggle } from "./ThemeToggle";
+
 const Login = (props) => {
   return (
     <div className="">
@@ -22,6 +24,7 @@ const Login = (props) => {
           ) : null}
         </div>
       </div>
+      <ThemeToggle />
     </div>
   );
 };

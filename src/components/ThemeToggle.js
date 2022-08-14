@@ -10,10 +10,10 @@ export const ThemeToggle = () => {
   };
 
   return (
-    <div className="fixed bottom-3">
+    <div className="fixed bottom-3 opacity-20 hover:opacity-100">
       <div
         onClick={switchState}
-        className="absolute top-[14px] left-[10px] z-10 cursor-pointer dark:text-white"
+        className="absolute top-[14px] left-[10px] z-10 cursor-pointer"
       >
         <Moon />
       </div>
@@ -21,7 +21,7 @@ export const ThemeToggle = () => {
         onClick={switchState}
         className="absolute top-[14px] left-[52px] z-10 cursor-pointer"
       >
-        <Sun color="red" />
+        <Sun />
       </div>
       <label
         htmlFor="default-toggle"
@@ -40,7 +40,7 @@ export const ThemeToggle = () => {
           bg-transparent 
           dark:border-[#90A4AE] 
           ${colorTheme === "dark" ? "after:translate-x-full" : ""}
-          after:bg-purpleLigth 
+          after:bg-red-300 
           after:absolute 
           after:top-[2px] 
           after:left-[2px] 
