@@ -1,29 +1,97 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-const hre = require("hardhat");
+require("dotenv").config();
+
+const arrayOfContractsNames = [
+  { title: "Blocknot", args: [] }
+];
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const arrLength = arrayOfContractsNames.length;
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+  if (arrLength === 0) {
+    console.log("Nothing to deploy");
+    return;
+  }
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  console.log(
+    `Start deploying of ${arrLength} contract${arrLength > 1 ? "s" : ""}`
+  );
 
-  await lock.deployed();
+  const [deployer] = await ethers.getSigners();
+  console.log(
+    "Deploying the contracts with the account:",
+    await deployer.getAddress()
+  );
 
-  console.log("Lock with 1 ETH deployed to:", lock.address);
+  console.log("Account balance:", (await deployer.getBalance()).toString());
+
+  for (let i = 0; i < arrayOfContractsNames.length; i++) {
+    const title = arrayOfContractsNames[i].title;
+    const args = arrayOfContractsNames[i].args;
+    console.log(`Deploying contract #${i + 1} with title ${title}`);
+    const Contract = await ethers.getContractFactory(title);
+    const contract = await Contract.deploy(...args);
+    await contract.deployed();
+    console.log(`Deploy finished. ${title} address: ${contract.address}`);
+    saveABIForClient(contract, title);
+  }
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+function saveABIForClient(contract, name) {
+  const fs = require("fs");
+  const contractsDir = __dirname + "/../client/contracts";
+  const TokenArtifact = artifacts.readArtifactSync(name);
+
+  if (!fs.existsSync(contractsDir)) {
+    fs.mkdirSync(contractsDir);
+    console.log("Crontracts directory created.");
+  }
+ 
+  if (!fs.existsSync(`${contractsDir}/provider.js`)) {
+    fs.writeFileSync(
+      `${contractsDir}/provider.js`,
+      `import { ethers } from "ethers";
+
+let provider;
+      
+if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+} else {
+  provider = new ethers.providers.InfuraProvider("${process.env.NETWORK}");
+}
+
+export default provider;
+  `
+    );
+    console.log("Provider created");
+  }
+
+  fs.writeFileSync(
+    `${contractsDir}/${lowercaseFirstLetter(name)}.js`,
+    `import {ethers} from 'ethers';
+import provider from './provider';    
+   
+const address = "${contract.address}";
+
+const abi = ${JSON.stringify(TokenArtifact.abi, null, 2)};
+
+const ${lowercaseFirstLetter(
+      name
+    )} = new ethers.Contract(address, abi, provider);
+
+export default ${lowercaseFirstLetter(name)};
+
+`
+  );
+  console.log(`Instance ${lowercaseFirstLetter(name)}.js created.`);
+}
+
+function lowercaseFirstLetter(string) {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });

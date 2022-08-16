@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import provider from "../../contracts/provider";
 import Header from "./Header";
 import Login from "./Login";
 import Main from "./Main";
-import provider from "../provider";
+
 
 const App = () => {
   const [loginAccount, setLoginAccount] = useState();

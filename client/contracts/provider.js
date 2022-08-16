@@ -9,3 +9,4 @@ if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
 }
 
 export default provider;
+  

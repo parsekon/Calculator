@@ -1,4 +1,4 @@
-export default function Todo() {
+export default function Blocknot() {
     function handleTodoAddClick(e) {
         e.preventDefault();
 

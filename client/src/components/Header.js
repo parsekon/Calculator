@@ -23,5 +23,3 @@ const Header = (props) => {
 };
 
 export default Header;
-
-// {props.account.substring(0, 5)+"..."+props.account.substring(38, )}
