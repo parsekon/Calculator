@@ -1,6 +1,6 @@
 const Calc = ({ children }) => {
     return(
-        <div className="bg-gray-100 w-80 p-8 border rounded-2xl calc">{children}</div>
+        <div className="bg-gray-100 dark:bg-black w-1/3 p-8 border border-red-200 dark:border-gray-700 rounded-2xl calc">{children}</div>
     )
 }
 

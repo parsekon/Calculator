@@ -6,7 +6,6 @@ export default function Blocknot() {
   const [lastIndex, setLastIndex] = useState();
   const [arrayTasks, setArrayTasks] = useState([]);
   const [list, setList] = useState();
-  const [loaderTasks, setLoaderTasks] = useState(false);
   const [loaderButton, setLoaderButton] = useState(false);
   const [loaderLiTask, setLoaderLiTask] = useState(false);
   const [numberTasks, setNumberTasks] = useState(0);
@@ -55,7 +54,7 @@ export default function Blocknot() {
     } catch (error) {
       console.error(error);
     }
-  }, [lastIndex, loaderButton, loaderLiTask]);
+  }, [lastIndex, loaderButton]);
 
   const handleCompleteTaskClick = async (id) => {
     setLoaderLiTask(true);
@@ -87,26 +86,30 @@ export default function Blocknot() {
 
   return (
     <>
-      <div className="grid w-1/3 content-between border border-gray-700 p-8">
+      <div className="grid w-1/3 mr-24 content-between bg-gray-100 dark:bg-black border border-red-200 dark:border-gray-700 p-8 rounded-2xl calc">
         <div className="h-full overflow-y-auto">
-          <div className="flex justify-between p">
+        <div className="absolute w-1/4">
+          <div className="flex justify-between bg-gray-100 dark:bg-black">
             <h1 className="mb-8 text-xl text-black underline dark:text-red-600">
               список дел:
             </h1>
             <span className="dark:text-gray-400 text-xl">{numberTasks}</span>
           </div>
+          </div>
+          <div className="pt-12 pr-4">
           {numberTasks === 0 ? (
-            <p className="pt-10 text-center dark:text-gray-600">
+            <p className="pt-20 text-center dark:text-gray-600">
               добавьте первую задачу
             </p>
           ) : (
             <ul>{list}</ul>
           )}
+          </div>
         </div>
         <div>
           <form className="items-end" onSubmit={handleTaskAddClick}>
             <label htmlFor="task" className="ml-4 text-xl">
-              Запишите заметку:
+
             </label>
             <br />
             <textarea
@@ -114,7 +117,7 @@ export default function Blocknot() {
               name="task"
               type="text"
               placeholder="Опишите задачу"
-              className="mb-2 dark:text-white w-full ring-1 ring-slate-900/10 shadow-sm dark:bg-gray-800 dark:ring-0 dark:highlight-white/5 resize-none rounded rounded-md border-2 border-gray-600 p-2 outline-none focus:border-blue-600"
+              className="mb-2 dark:text-white focus:outline-none w-full ring-1 ring-slate-900/10 shadow-sm dark:bg-gray-800 dark:ring-0 dark:highlight-white/5 resize-none rounded rounded-md border-2 border-gray-600 p-2 outline-none focus:border-blue-600"
               // className="resize-none text-sm p-2 w-80 ring-1 ring-slate-900/10 shadow-sm rounded-md dark:bg-slate-800 dark:ring-0 dark:highlight-white/5"
             />
             <button

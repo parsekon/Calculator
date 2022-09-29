@@ -15,3 +15,25 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
+
+.dashbord {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.equels {
+    background-color: #fc0;
+    grid-column: 3/5;
+}
+
+.opt {
+    background-color: #fc0;
+}
+
+.App {
+    width: 100wv;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

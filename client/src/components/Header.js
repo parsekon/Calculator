@@ -2,7 +2,8 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const Header = (props) => {
   return (
-    <div className="flex h-screen h-[70px] justify-between bg-white p-4 dark:bg-black">
+    <div className="fixed top-0 left-0 right-0">
+    <div className="flex h-screen h-[70px] justify-between p-4 bg-blue-50 dark:bg-gray-900 calc">
       <h1 className="font-mono text-3xl uppercase text-black dark:text-white">
         <span className="text-bold text-red-600">Crypto </span>Calculator
       </h1>
@@ -18,6 +19,7 @@ const Header = (props) => {
           <img className="w-6" alt="logout" src="/images/logout.png" />
         </button>
       </div>
+    </div>
     </div>
   );
 };
