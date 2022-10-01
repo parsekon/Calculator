@@ -1,16 +1,9 @@
-import { useEffect, useState } from 'react';
 import {useOnDraw} from './Hooks';
 
 const Canvas = ({
     width,
     height
 }) => {
-    const [clear, setClear] = useState(false);
-
-    useEffect(() => {
-
-    }, [clear]);
-
     const {
         setCanvasRef,
         onCanvasMouseDown
@@ -42,20 +35,15 @@ const Canvas = ({
 
     }
 
-    const handleClickClear = () => {
-        setClear(!clear)
-    }
-
     return(
         <>
-        <canvas
-            width={width}
-            height={height}
-            onMouseDown={onCanvasMouseDown}
-            className="border border-black dark:border-red-600"
-            ref={setCanvasRef}
-        />
-        <button className='dark:text' onClick={handleClickClear}>clear</button>
+            <canvas
+                width={width}
+                height={height}
+                onMouseDown={onCanvasMouseDown}
+                className="border border-black dark:border-red-600"
+                ref={setCanvasRef}
+            />
         </>
     );
 
