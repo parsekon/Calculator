@@ -7,6 +7,7 @@ import Calc from "./Calculator/Calc";
 import Screen from "./Calculator/Screen";
 import Drawing from "./Drawing/Drawing";
 import Menu from "./Menu";
+import Rules from "./Rules/Rules";
 
 const btnValues = [
   ["C", "+-", "%", "/"],
@@ -18,15 +19,24 @@ const btnValues = [
 
 const Main = () => {
   const [page, setPage] = useState(false);
+  const [isOpen, setOpen] = useState(false);
 
   const handleChangePage = () => {
     setPage(!page);
     console.log("page >>", page);
   };
 
+  const modalOpenClick = () => {
+    setOpen(!isOpen);
+  };
+
+  const handleStopClick = (event) => {
+    event.stopPropagation();
+  };
+
   return (
     <div className="flex h-screen `${!page ? justify-center : justify-between}` bg-blue-50 p-24 dark:bg-black">
-      <Menu handleChangePage={handleChangePage} />
+      <Menu handleChangePage={handleChangePage} modalOpen={modalOpenClick} />
       {!page ? (
         <>
           <Blocknot />
@@ -44,6 +54,11 @@ const Main = () => {
       ) : (
         <Drawing />
       )}
+      <Rules
+        isOpen={isOpen}
+        onClose={modalOpenClick}
+        stopClick={handleStopClick}
+      />
     </div>
   );
 };
