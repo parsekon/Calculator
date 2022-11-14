@@ -1,7 +1,7 @@
 import {ethers} from 'ethers';
 import provider from './provider';    
    
-const address = "0xfD3147201291FE517f95289C55b631F371111f32";
+const address = "0x3C7C56911a1714e04bC06480a0024f82570b72e4";
 
 const abi = [
   {
