@@ -33,7 +33,7 @@ const App = () => {
         const chainId = await ethereum.request({
             method: "eth_chainId",
         });
-        if (chainId != process.env.targetChainId) {
+        if (chainId !== "0xAA36A7") {
             await ethereum.request({
                 method: "wallet_switchEthereumChain",
                 params: [{ chainId: "0xAA36A7" }],
