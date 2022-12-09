@@ -54,7 +54,7 @@ export default function Blocknot() {
     } catch (error) {
       console.error(error);
     }
-  }, [arrayTasks, lastIndex, loaderButton, loaderLiTask]);
+  }, [lastIndex, loaderButton]);
 
   const handleCompleteTaskClick = async (id) => {
     setLoaderLiTask(true);
