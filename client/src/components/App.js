@@ -35,12 +35,12 @@ const App = () => {
       const chainId = await ethereum.request({
         method: "eth_chainId",
       });
-      if (chainId !== '0xAA36A7') {
+      if (chainId !== '0x5') {
         await ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [
             {
-              chainId: '0xAA36A7',}],
+              chainId: '0x5',}],
             });
       }
       sessionStorage.setItem("login", accounts[0]);
