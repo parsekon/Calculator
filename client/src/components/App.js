@@ -29,11 +29,20 @@ const App = () => {
       setNeedMetamask(true);
     }
     try {
-      const account = await provider.send("eth_requestAccounts", []);
-      sessionStorage.setItem("login", account[0]);
-      setLoginAccount(account[0]);
+        const account = await provider.send("eth_requestAccounts", []);
+        const chainId = await ethereum.request({
+            method: "eth_chainId",
+        });
+        if (chainId != process.env.targetChainId) {
+            await ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ chainId: "0xAA36A7" }],
+            })
+        }
+        sessionStorage.setItem("login", account[0]);
+        setLoginAccount(account[0]);
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
   };
 
