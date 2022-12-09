@@ -9,7 +9,6 @@ export default function Blocknot() {
   const [loaderButton, setLoaderButton] = useState(false);
   const [loaderLiTask, setLoaderLiTask] = useState(false);
   const [numberTasks, setNumberTasks] = useState(0);
-  const [isComplete, setComplete] = useState(false);
   const taskRef = useRef();
 
   useEffect(() => {
@@ -55,7 +54,7 @@ export default function Blocknot() {
     } catch (error) {
       console.error(error);
     }
-  }, [lastIndex, isComplete, loaderButton]);
+  }, [arrayTasks, lastIndex, loaderButton, loaderLiTask]);
 
   const handleCompleteTaskClick = async (id) => {
     setLoaderLiTask(true);
@@ -77,7 +76,6 @@ export default function Blocknot() {
       const tx = await blocknotWithSigner().addTask(taskRef.current.value);
       taskRef.current.value = "";
       const response = await tx.wait();
-      setComplete(!isComplete);
       console.log("response", response);
     } catch (error) {
       console.error(error);
