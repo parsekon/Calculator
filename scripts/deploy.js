@@ -38,7 +38,7 @@ async function main() {
 
 function saveABIForClient(contract, name) {
   const fs = require("fs");
-  const contractsDir = __dirname + "/../client/contracts";
+  const contractsDir = __dirname + "/../client/src/contracts";
   const TokenArtifact = artifacts.readArtifactSync(name);
 
   if (!fs.existsSync(contractsDir)) {
@@ -61,6 +61,23 @@ if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
 
 export default provider;
   `
+    );
+    console.log("Provider created");
+  }
+
+  if (!fs.existsSync(`${contractsDir}/blocknotWithSigner.js`)) {
+    fs.writeFileSync(
+      `${contractsDir}/blocknotWithSigner.js`,
+      `import blocknot from "./blocknot"
+      import provider from "./provider";
+      
+      const blocknotWithSigner = () => {
+          const signer = provider.getSigner();
+          console.log("signer", signer)
+          return blocknot.connect(signer);
+      }
+      
+      export default blocknotWithSigner;`
     );
     console.log("Provider created");
   }
