@@ -31,20 +31,20 @@ const App = () => {
     try {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
-    });
-        const chainId = await ethereum.request({
-            method: "eth_chainId",
+      });
+      const chainId = await ethereum.request({
+        method: "eth_chainId",
+      });
+      if (chainId !== 0xAA36A7) {
+        await ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: 0xAA36A7 }],
         });
-        if (chainId != "0xAA36A7") {
-            await ethereum.request({
-                method: "wallet_switchEthereumChain",
-                params: [{ chainId: "0xAA36A7" }],
-            })
-        }
-        sessionStorage.setItem("login", accounts[0]);
-        setLoginAccount(accounts[0]);
+      }
+      sessionStorage.setItem("login", accounts[0]);
+      setLoginAccount(accounts[0]);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
   };
 
